@@ -42,5 +42,12 @@ namespace BoardingPlanner
             objPlanning.MdiParent = this;
             objPlanning.Show();
         }
+
+        private void viewOnLeaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewOnLeave objViewOnLeave = new ViewOnLeave();
+            objViewOnLeave.MdiParent = this;
+            objViewOnLeave.Show();
+        }
     }
 }

@@ -36,6 +36,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPlanningsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createPlanningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewOnLeaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,21 +63,22 @@
             // importDataToolStripMenuItem
             // 
             this.importDataToolStripMenuItem.Name = "importDataToolStripMenuItem";
-            this.importDataToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importDataToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.importDataToolStripMenuItem.Text = "Planning Data";
             this.importDataToolStripMenuItem.Click += new System.EventHandler(this.importDataToolStripMenuItem_Click);
             // 
             // importLeaveDataToolStripMenuItem
             // 
             this.importLeaveDataToolStripMenuItem.Name = "importLeaveDataToolStripMenuItem";
-            this.importLeaveDataToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importLeaveDataToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.importLeaveDataToolStripMenuItem.Text = "Leave Data";
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewPlanningsToolStripMenuItem,
-            this.createPlanningToolStripMenuItem});
+            this.createPlanningToolStripMenuItem,
+            this.viewOnLeaveToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.viewToolStripMenuItem.Text = "Operations";
@@ -94,6 +96,13 @@
             this.createPlanningToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.createPlanningToolStripMenuItem.Text = "View Plannings";
             this.createPlanningToolStripMenuItem.Click += new System.EventHandler(this.createPlanningToolStripMenuItem_Click);
+            // 
+            // viewOnLeaveToolStripMenuItem
+            // 
+            this.viewOnLeaveToolStripMenuItem.Name = "viewOnLeaveToolStripMenuItem";
+            this.viewOnLeaveToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.viewOnLeaveToolStripMenuItem.Text = "View on Leave";
+            this.viewOnLeaveToolStripMenuItem.Click += new System.EventHandler(this.viewOnLeaveToolStripMenuItem_Click);
             // 
             // MDIPatent
             // 
@@ -123,6 +132,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewPlanningsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importLeaveDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createPlanningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewOnLeaveToolStripMenuItem;
     }
 }
 

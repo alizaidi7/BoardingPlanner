@@ -64,11 +64,23 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DBLayer.cs" />
+    <Compile Include="EditPlanning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditPlanning.Designer.cs">
+      <DependentUpon>EditPlanning.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImportData.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ImportData.Designer.cs">
       <DependentUpon>ImportData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportStaff.Designer.cs">
+      <DependentUpon>ImportStaff.cs</DependentUpon>
     </Compile>
     <Compile Include="MDIPatent.cs">
       <SubType>Form</SubType>
@@ -92,14 +104,26 @@
       <DependentUpon>Replacement.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
+    <Compile Include="ViewOnLeave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewOnLeave.Designer.cs">
+      <DependentUpon>ViewOnLeave.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewPlanning.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ViewPlanning.Designer.cs">
       <DependentUpon>ViewPlanning.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditPlanning.resx">
+      <DependentUpon>EditPlanning.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImportData.resx">
       <DependentUpon>ImportData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportStaff.resx">
+      <DependentUpon>ImportStaff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MDIPatent.resx">
       <DependentUpon>MDIPatent.cs</DependentUpon>
@@ -118,6 +142,9 @@
     </Compile>
     <EmbeddedResource Include="Replacement.resx">
       <DependentUpon>Replacement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewOnLeave.resx">
+      <DependentUpon>ViewOnLeave.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewPlanning.resx">
       <DependentUpon>ViewPlanning.cs</DependentUpon>

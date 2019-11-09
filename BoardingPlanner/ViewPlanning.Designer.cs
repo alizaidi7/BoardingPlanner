@@ -43,7 +43,6 @@
             this.colReplacementOperation = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnExport = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.dtpCOC = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -82,11 +81,11 @@
             this.colRemarks,
             this.colReplacementOperation,
             this.colEdit});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 87);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 62);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1293, 324);
+            this.dataGridView1.Size = new System.Drawing.Size(1293, 349);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -206,7 +205,6 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnExport);
             this.panel1.Controls.Add(this.btnSearch);
             this.panel1.Controls.Add(this.dtpCOC);
             this.panel1.Controls.Add(this.label6);
@@ -222,39 +220,31 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1293, 69);
+            this.panel1.Size = new System.Drawing.Size(1293, 44);
             this.panel1.TabIndex = 1;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(1095, 41);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
-            this.btnExport.TabIndex = 23;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(1176, 41);
+            this.btnSearch.Location = new System.Drawing.Point(1197, 6);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 22;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // dtpCOC
             // 
             this.dtpCOC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCOC.Location = new System.Drawing.Point(1122, 8);
+            this.dtpCOC.Location = new System.Drawing.Point(1047, 8);
             this.dtpCOC.Name = "dtpCOC";
-            this.dtpCOC.Size = new System.Drawing.Size(129, 20);
+            this.dtpCOC.Size = new System.Drawing.Size(105, 20);
             this.dtpCOC.TabIndex = 21;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1073, 11);
+            this.label6.Location = new System.Drawing.Point(995, 12);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 10;
@@ -264,15 +254,15 @@
             // 
             this.txtTechnicalGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtTechnicalGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtTechnicalGroup.Location = new System.Drawing.Point(924, 8);
+            this.txtTechnicalGroup.Location = new System.Drawing.Point(867, 8);
             this.txtTechnicalGroup.Name = "txtTechnicalGroup";
-            this.txtTechnicalGroup.Size = new System.Drawing.Size(129, 20);
+            this.txtTechnicalGroup.Size = new System.Drawing.Size(105, 20);
             this.txtTechnicalGroup.TabIndex = 9;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(818, 11);
+            this.label5.Location = new System.Drawing.Point(758, 12);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 8;
@@ -282,15 +272,15 @@
             // 
             this.txtVessel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtVessel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtVessel.Location = new System.Drawing.Point(669, 8);
+            this.txtVessel.Location = new System.Drawing.Point(630, 8);
             this.txtVessel.Name = "txtVessel";
-            this.txtVessel.Size = new System.Drawing.Size(129, 20);
+            this.txtVessel.Size = new System.Drawing.Size(105, 20);
             this.txtVessel.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(611, 11);
+            this.label4.Location = new System.Drawing.Point(569, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 6;
@@ -300,15 +290,15 @@
             // 
             this.txtRank.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtRank.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtRank.Location = new System.Drawing.Point(462, 8);
+            this.txtRank.Location = new System.Drawing.Point(441, 8);
             this.txtRank.Name = "txtRank";
-            this.txtRank.Size = new System.Drawing.Size(129, 20);
+            this.txtRank.Size = new System.Drawing.Size(105, 20);
             this.txtRank.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(409, 11);
+            this.label3.Location = new System.Drawing.Point(385, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 4;
@@ -318,15 +308,15 @@
             // 
             this.txtName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtName.Location = new System.Drawing.Point(260, 8);
+            this.txtName.Location = new System.Drawing.Point(257, 8);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(129, 20);
+            this.txtName.Size = new System.Drawing.Size(105, 20);
             this.txtName.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(205, 11);
+            this.label2.Location = new System.Drawing.Point(199, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 2;
@@ -336,15 +326,15 @@
             // 
             this.txtHKID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtHKID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtHKID.Location = new System.Drawing.Point(56, 8);
+            this.txtHKID.Location = new System.Drawing.Point(71, 8);
             this.txtHKID.Name = "txtHKID";
-            this.txtHKID.Size = new System.Drawing.Size(129, 20);
+            this.txtHKID.Size = new System.Drawing.Size(105, 20);
             this.txtHKID.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 11);
+            this.label1.Location = new System.Drawing.Point(15, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 0;
@@ -385,7 +375,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtHKID;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.DateTimePicker dtpCOC;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;

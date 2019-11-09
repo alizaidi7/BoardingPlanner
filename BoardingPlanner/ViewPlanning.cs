@@ -41,9 +41,10 @@ namespace BoardingPlanner
 
         private void ViewPlanning_Load(object sender, EventArgs e)
         {
-            plannings = DBLayer.Instance.GetPlannings();
+            plannings = DBLayer.Instance.GetPlannings(0, string.Empty, string.Empty, string.Empty, string.Empty, DateTime.MinValue);
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = plannings;
+            dtpCOC.Value = new DateTime(2000, 1, 1);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -55,10 +56,28 @@ namespace BoardingPlanner
                 objReplacement.PlanningId = id;
                 if (objReplacement.ShowDialog() == DialogResult.OK)
                 {
-                    plannings = DBLayer.Instance.GetPlannings();                    
+                    plannings = DBLayer.Instance.GetPlannings((txtHKID.Text == string.Empty) ? 0 : Convert.ToInt32(txtHKID.Text), txtName.Text, txtRank.Text, txtVessel.Text, txtTechnicalGroup.Text, dtpCOC.Value);
                     dataGridView1.DataSource = plannings;
                 }
             }
+            if (e.ColumnIndex == colEdit.Index && e.RowIndex >= 0)
+            {
+                var id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[colId.Name].Value);
+                EditPlanning objEditPlanning = new EditPlanning();
+                objEditPlanning.PlanningId = id;
+                if (objEditPlanning.ShowDialog() == DialogResult.OK)
+                {
+                    plannings = DBLayer.Instance.GetPlannings((txtHKID.Text == string.Empty) ? 0 : Convert.ToInt32(txtHKID.Text), txtName.Text, txtRank.Text, txtVessel.Text, txtTechnicalGroup.Text, dtpCOC.Value);
+                    dataGridView1.DataSource = plannings;
+                }
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            plannings = DBLayer.Instance.GetPlannings((txtHKID.Text == string.Empty) ? 0 : Convert.ToInt32(txtHKID.Text), txtName.Text, txtRank.Text, txtVessel.Text, txtTechnicalGroup.Text, dtpCOC.Value);
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.DataSource = plannings;
         }
     }
 }

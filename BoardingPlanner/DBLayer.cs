@@ -22,6 +22,7 @@ namespace BoardingPlanner
         {
             var appPath = Application.ExecutablePath;
             _connection = new OleDbConnection($"Provider = Microsoft.ACE.OLEDB.12.0; Data Source ={Path.Combine(Path.GetDirectoryName(appPath), "OnBoardDB.accdb")};Persist Security Info = True;");
+            _connection.Open();
             SetupAutoCompletes();
         }
 
@@ -35,16 +36,29 @@ namespace BoardingPlanner
             }
         }
 
+        internal void ImportStaff(IEnumerable<PlannerDTO> data)
+        {
+            var command = new OleDbCommand(string.Empty, _connection);
+            CreateRanks(data, command);
+            CreateVessels(data, command);
+            CreateStaffs(data, command);
+        }
+
+        internal void UpdatePlanning(int planningId, string replacement, string remarks)
+        {
+            var command = new OleDbCommand(string.Empty, _connection);
+            command.CommandText = $"UPDATE tblPlanning SET Remarks = Remarks & ' {replacement}', Replacement = Replacement & ' {remarks}' WHERE Id = {planningId}";
+            command.ExecuteNonQuery();
+        }
+
         internal void ImportData(IEnumerable<PlannerDTO> data)
         {
-            _connection.Open();
             var command = new OleDbCommand(string.Empty, _connection);
             CreateRanks(data, command);
             CreateTechnicalGroups(data, command);
             CreateVessels(data, command);
             CreateStaffs(data, command);
             CreatePlanings(data, command);
-            _connection.Close();
             SetupAutoCompletes();
         }
 
@@ -188,8 +202,6 @@ namespace BoardingPlanner
 
         public void SetupAutoCompletes()
         {
-            _connection.Open();
-
             Ranks = new List<RankDTO>();
             TechnicalGroups = new List<TechnicalGroupDTO>();
             Staffs = new List<StaffDTO>();
@@ -222,15 +234,38 @@ namespace BoardingPlanner
                 TechnicalGroups.Add(new TechnicalGroupDTO { Id = reader.GetInt32(0), Name = reader.GetString(1) });
             }
             reader.Close();
-
-            _connection.Close();
         }
 
-        public IList<PlannerDTO> GetPlannings()
+        public IList<PlannerDTO> GetPlannings(int hkid, string name, string rank, string vessel, string techGroup, DateTime coc)
         {
-            _connection.Open();
             var query = $@"SELECT tblPlanning.Id, tblPlanning.SerialNumber, tblRank.Name, tblStaff.HKID, tblStaff.Name, tblVessel.Name, tblTechnicalGroup.Name, tblPlanning.COC, tblPlanning.Remarks, tblPlanning.Replacement, tblPlanning.Id
-                                    FROM tblVessel INNER JOIN (tblTechnicalGroup INNER JOIN (tblStaff INNER JOIN (tblRank INNER JOIN tblPlanning ON tblRank.Id = tblPlanning.RankId) ON tblStaff.Id = tblPlanning.StaffId) ON tblTechnicalGroup.Id = tblPlanning.TechnicalGroupId) ON tblVessel.Id = tblPlanning.VesselId;";
+                                    FROM tblVessel INNER JOIN (tblTechnicalGroup INNER JOIN (tblStaff INNER JOIN (tblRank INNER JOIN tblPlanning ON tblRank.Id = tblPlanning.RankId) ON tblStaff.Id = tblPlanning.StaffId) ON tblTechnicalGroup.Id = tblPlanning.TechnicalGroupId) ON tblVessel.Id = tblPlanning.VesselId WHERE 1 = 1 ";
+
+            if (hkid > 0)
+            {
+                query = query + $" AND tblStaff.HKID LIKE '%{hkid}%'";
+            }
+            if (string.IsNullOrEmpty(name) == false)
+            {
+                query = query + $" AND tblStaff.Name LIKE '%{name}%'";
+            }
+            if (string.IsNullOrEmpty(rank) == false)
+            {
+                query = query + $" AND tblRank.Name LIKE '%{rank}%'";
+            }
+            if (string.IsNullOrEmpty(vessel) == false)
+            {
+                query = query + $" AND tblVessel.Name LIKE '%{vessel}%'";
+            }
+            if (string.IsNullOrEmpty(techGroup) == false)
+            {
+                query = query + $" AND tblTechnicalGroup.Name LIKE '%{techGroup}%'";
+            }
+            if (coc > new DateTime(2000, 1, 1))
+            {
+                query = query + $" AND tblPlanning.COC > '{coc}'";
+            }
+
             OleDbCommand command = new OleDbCommand(query, _connection);
             OleDbDataReader reader = command.ExecuteReader();
             IList<PlannerDTO> plannings = new List<PlannerDTO>();
@@ -251,13 +286,11 @@ namespace BoardingPlanner
                 });
             }
             reader.Close();
-            _connection.Close();
             return plannings.OrderBy(o => o.SerialNumber).ToList();
         }
 
         public void CreatePlanning(PlannerDTO dto)
         {
-            _connection.Open();
             var command = new OleDbCommand(string.Empty, _connection);
             command.CommandText = $"SELECT Id FROM tblPlanning WHERE StaffId = (SELECT Id FROM tblStaff WHERE HKID = {dto.HKID})";
             var result = command.ExecuteScalar();
@@ -267,12 +300,10 @@ namespace BoardingPlanner
                 throw new InvalidOperationException("Planning already exists for this staff.");
             }
             CreatePlaning(command, dto);
-            _connection.Close();
         }
 
         public int GetSerialNumber()
         {
-            _connection.Open();
             var command = new OleDbCommand("SELECT MAX(SerialNumber) FROM tblPlanning", _connection);
             var result = command.ExecuteScalar();
             var sNo = 1;
@@ -280,28 +311,23 @@ namespace BoardingPlanner
             {
                 sNo = Convert.ToInt32(result) + 1;
             }
-            _connection.Close();
             return sNo;
         }
 
         public string GetStaffName(int hkid)
         {
-            _connection.Open();
             var command = new OleDbCommand($"SELECT Name FROM tblStaff WHERE HKID = {hkid}", _connection);
             var result = command.ExecuteScalar();
-            _connection.Close();
             return Convert.ToString(result);
         }
 
         public void ExecureReplacement(int planningId, int hkid, string name)
         {
-            _connection.Open();
             var command = new OleDbCommand(string.Empty, _connection);
             command.CommandText = $"SELECT Id FROM tblPlanning WHERE Id <> {planningId} AND StaffId = (SELECT Id FROM tblStaff WHERE HKID = {hkid})";
             var result = command.ExecuteScalar();
             if (result != null)
             {
-                _connection.Close();
                 throw new InvalidOperationException("Planning already exists for this staff.");
             }
             command.CommandText = $"SELECT Id FROM tblStaff WHERE HKID = {hkid}";
@@ -312,7 +338,32 @@ namespace BoardingPlanner
             }
             command.CommandText = $"UPDATE tblPlanning SET StaffId = {staffId} WHERE Id = {planningId}";
             command.ExecuteNonQuery();
-            _connection.Close();
+        }
+
+        internal IList<StaffDTO> GetOnLeave(int hkid, string name)
+        {
+            string query = "SELECT HKID, Name FROM tblStaff WHERE Id NOT IN (SELECT StaffId FROM tblPlanning)";
+            if (hkid > 0)
+            {
+                query = query + $" AND HKID LIKE '%{hkid}%'";
+            }
+            if (string.IsNullOrEmpty(name) == false)
+            {
+                query = query + $" AND Name LIKE '%{name}%'";
+            }
+            var command = new OleDbCommand(query, _connection);
+            OleDbDataReader reader = command.ExecuteReader();
+            IList<StaffDTO> staffs = new List<StaffDTO>();
+            while (reader.Read())
+            {
+                staffs.Add(new StaffDTO
+                {
+                    HKID = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                });
+            }
+            reader.Close();
+            return staffs.OrderBy(o => o.HKID).ToList();
         }
     }
 }

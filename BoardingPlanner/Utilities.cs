@@ -51,5 +51,26 @@ namespace BoardingPlanner
                 }
             }
         }
+
+        public static IEnumerable<PlannerDTO> GetStaffData(string filePath)
+        {
+
+            using (XLWorkbook workbook = new XLWorkbook(filePath))
+            {
+                IXLWorksheet worksheet = workbook.Worksheet(1);
+                var count = 0;
+                foreach (IXLRow row in worksheet.RowsUsed())
+                {
+                    count++;
+                    if (count == 1) continue;
+                    var dto = new PlannerDTO();
+                    dto.HKID = Convert.ToInt32(row.Cell(1).Value);
+                    dto.Name = Convert.ToString(row.Cell(2).Value);
+                    dto.Rank = Convert.ToString(row.Cell(3).Value);
+                    dto.Vessel = Convert.ToString(row.Cell(4).Value);
+                    yield return dto;
+                }
+            }
+        }
     }
 }
